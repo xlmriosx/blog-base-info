@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MI WEB | {% block title %}{% endblock title %}</title>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    </head>
+
+    <body class="contenedor">
+        <div class="centrar">
+            <a href="{% url 'home' %}">Inicio</a>
+            <a href="{% url 'about_us' %}">Nosotros</a>
+            <a href="{% url 'posts:listar' %}">Blog</a>
+
+            <br>
+            <a href="">INICIAR SESION</a>
+            <a href="">REGISTRARME</a>
+
+        </div>
+
+        <div class="bloque">
+            {% block content %}
+
+            {% endblock content %}
+        </div>
+
+        <footer>
+            <p>Author: informatorio</p>
+            <p><a href="mailto:informatorio@example.com">informatorio@example.com</a></p>
+        </footer>
+    </body>
+</html>

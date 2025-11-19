@@ -1,0 +1,13 @@
+.bloque {
+    background-color: gray;
+}
+
+.centrar {
+    align-content: center;
+    text-align: center;
+}
+
+.bloque {
+    text-align: center;
+    padding: 40px;
+}
