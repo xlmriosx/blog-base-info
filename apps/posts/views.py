@@ -18,3 +18,11 @@ def listar(request):
     context['categoria'] = cat
 
     return render(request, 'posts/listar.html', context)
+
+def detalle(request, pk):
+    context = {}
+
+    n = Post.objects.get(pk = pk)
+    context['post'] = n
+
+    return render(request, 'posts/detalle.html', context)

@@ -5,10 +5,9 @@
 
 <p>POSTS:</p>
 {% for p in posts %}
-<p>{{ p.titulo }}</p>
-<img src="{{ p.imagen.url }}" width="300px" height="80%">
+<p><a href="{% url 'posts:detalle' p.id %}">{{ p.titulo }}</a></p>
+<img src="{{ p.imagen.url }}" width="100px" height="80%">
 <p>Categoria: {{p.categoria}}</p>
-<p>{{p.cuerpo}}</p>
 <p>{{p.fecha}}</p>
 
 {% endfor %}

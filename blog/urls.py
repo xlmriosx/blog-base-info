@@ -21,10 +21,17 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.contrib.auth import views as auth
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.Home, name='home'),
     path("about_us", views.AboutUs, name='about_us'),
 
-    path("blog/", include('posts.urls')),
+    path("blog/", include('apps.posts.urls')),
+    path("usuario/", include('apps.usuarios.urls')),
+
+    path('login/', auth.LoginView.as_view(template_name='usuarios/login.html'), name='login'),
+    path('logout/', auth.LogoutView.as_view(), name="logout"),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

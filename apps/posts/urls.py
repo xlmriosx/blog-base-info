@@ -5,5 +5,6 @@ app_name = 'posts'
 
 urlpatterns = [
     path("", views.listar, name="listar"),
+    path("detalle/<int:pk>", views.detalle, name="detalle"),
     
 ]
