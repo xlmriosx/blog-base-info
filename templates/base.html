@@ -16,7 +16,12 @@
             <br>
             {% if user.is_authenticated %}
                 <strong>Hola {{user.username}}</strong>
-                <a href="{% url 'logout' %}">LOGOUT</a>
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="cursor: pointer; background: none; border: none; padding: 0; color: blue; text-decoration: underline;">
+                        LOGOUT
+                    </button>
+                </form>
             {% else %}
                 <a href="{% url 'login' %}">INICIAR SESION</a>
                 <a href="{% url 'usuarios:registro' %}">REGISTRARME</a>
