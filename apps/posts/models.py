@@ -14,10 +14,17 @@ class Post(models.Model):
     cuerpo = models.TextField()
     categoria_post = models.ForeignKey(Categoria, on_delete= models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True)
-    imagen = models.ImageField(upload_to='post')
+    imagen = models.ImageField(upload_to='post', null=True, blank=True)
 
     def __str__(self):
         return f"{self.titulo} {self.fecha}"
+
+class PostImage(models.Model):
+    post = models.ForeignKey(Post, related_name='imagenes', on_delete=models.CASCADE)
+    imagen = models.ImageField(upload_to='post_images')
+
+    def __str__(self):
+        return f"Imagen de {self.post.titulo}"
 
 class Comentario(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete= models.CASCADE)
