@@ -1,16 +1,69 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Blog{% endblock %}
+
 {% block content %}
 
-<p>POSTS:</p>
-{% for p in posts %}
-<p><a href="{% url 'posts:detalle' p.id %}">{{ p.titulo }}</a></p>
-<img src="{{ p.imagen.url }}" width="100px" height="80%">
-<p>Categoria: {{p.categoria}}</p>
-<p>{{p.fecha}}</p>
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1>Últimos Posts</h1>
+    </div>
+    <div class="col-md-4 text-end">
+        {% if user.is_authenticated and user.es_colaborador %}
+            <a href="{% url 'posts:post_create' %}" class="btn btn-primary">Crear Nuevo Post</a>
+        {% endif %}
+    </div>
+</div>
 
-{% endfor %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="card mb-4">
+            <div class="card-header">
+                Categorías
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="{% url 'posts:listar' %}" class="text-decoration-none">Todas</a></li>
+                {% for c in categoria %}
+                    <li class="list-group-item"><a href="{% url 'posts:listar' %}?id={{c.id}}" class="text-decoration-none">{{ c.nombre }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 
+    <div class="col-md-9">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for p in posts %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    {% if p.imagen %}
+                        <img src="{{ p.imagen.url }}" class="card-img-top" alt="{{ p.titulo }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
+                            Sin Imagen
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ p.titulo }}</h5>
+                        <p class="card-text"><small class="text-muted">{{ p.fecha|date:"d M Y" }} | {{ p.categoria_post }}</small></p>
+                        <p class="card-text">{{ p.cuerpo|truncatewords:20 }}</p>
+                        <a href="{% url 'posts:detalle' p.id %}" class="btn btn-outline-primary btn-sm">Leer más</a>
+                    </div>
+                    {% if user.is_authenticated and user.es_colaborador %}
+                    <div class="card-footer bg-transparent border-top-0">
+                        <a href="{% url 'posts:post_update' p.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="{% url 'posts:post_delete' p.pk %}" class="btn btn-danger btn-sm">Borrar</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p>No hay posts disponibles.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
 {% endblock content %}
